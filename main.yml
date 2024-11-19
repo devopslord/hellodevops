@@ -1,0 +1,25 @@
+- defaultTab: nodes
+  description: "Execute main.py every 5 minutes"
+  executionEnabled: true
+  group: "scheduled-jobs"
+  id: "main-py-execution"
+  loglevel: INFO
+  name: "Run main.py"
+  nodeFilterEditable: false
+  schedule:
+    time:
+      hour: '*'
+      minute: '*/5'
+  scheduleEnabled: true
+  sequence:
+    commands:
+      - description: "Run Python script"
+        exec: "sudo python3.11 ~/main.py"
+    keepgoing: false
+    strategy: "node-first"
+  uuid: "abc12345-6789-0123-4567-abcdef012345"  # Replace with a unique UUID
+  options:
+    - name: python_path
+      description: "Path to Python executable"
+      required: false
+      defaultValue: "/usr/bin/python3.11"

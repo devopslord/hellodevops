@@ -1,0 +1,19 @@
+policies:
+  - name: cfn-delete-by-end-time
+    resource: cfn
+    description: >
+      Delete any CloudFormation stack whose `end_time` tag is in the past.
+    mode:
+      type: periodic
+      schedule: "rate(5 minutes)"                # run every 5 minutes
+      role:   arn:aws:iam::875490958810:role/CustodianLambdaRole
+    filters:
+      - type: value
+        key: "tag:end_time"
+        value_type: age
+        op: ge
+        value: 0                                 # any end_time at least 0 days old
+    actions:
+      - type: set-protection
+        state: False
+      - type: delete
